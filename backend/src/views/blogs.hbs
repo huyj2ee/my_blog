@@ -1,0 +1,38 @@
+<div>
+  <a href="/admin/blog">New blog</a>
+</div>
+
+<script>
+  function onDelete(slug) {
+    let result = confirm("Do you want to delete?");
+    if (result) {
+      let url = window.location + '/' + slug;
+      fetch(url, {
+        method: 'DELETE',
+      })
+      .then(() => {
+        window.location.reload();
+      });
+    }
+  }
+</script>
+{{#each blogs}}
+  <div>
+    <span>Slug: </span>
+    <span>{{this.slug}}</span>
+  </div>
+  <div>
+    <span>Title: </span>
+    <span>{{this.title}}</span>
+  </div>
+  <div>
+    <span>Brief: </span>
+    <span>{{this.brief}}</span>
+  </div>
+  <div>
+    <a href="/admin/blog/{{this.slug}}">View</a>
+    <a href="/admin/blogs/{{this.slug}}">Edit</a>
+    <a href="javascript:;" onclick="onDelete('{{this.slug}}');">Delete</a>
+  </div>
+  <hr />
+{{/each}}

@@ -1,0 +1,36 @@
+<style>
+    #container {
+        width: 1000px;
+        margin: 20px auto;
+    }
+    .ck-editor__editable[role="textbox"] {
+        /* editing area */
+        min-height: 200px;
+    }
+    .ck-content .image {
+        /* block images */
+        max-width: 80%;
+        margin: 20px auto;
+    }
+</style>
+<div id="container">
+    <div>
+        <span>Slug: </span>
+        <span>{{slug}}</span>
+    </div>
+
+    <div>
+        <span>Title: </span>
+        <span>{{title}}</span>
+    </div>
+
+    <div>
+        <span>Brief: </span>
+        <span>{{brief}}</span>
+    </div>
+
+    <div>
+        <div>Content:</div>
+        <div>{{{content}}}</div>
+    </div>
+</div>
