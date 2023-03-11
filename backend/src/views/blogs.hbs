@@ -1,18 +1,17 @@
 <div>
   <a href="/admin/blog">New blog</a>
 </div>
+<form name="delete-blog" method="POST">
+</form>
 
 <script>
   function onDelete(slug) {
-    let result = confirm("Do you want to delete?");
+    let deleteForm = document.forms['delete-blog'];
+    let result = confirm('Do you want to delete?');
     if (result) {
-      let url = window.location + '/' + slug;
-      fetch(url, {
-        method: 'DELETE',
-      })
-      .then(() => {
-        window.location.reload();
-      });
+      let url = window.location + '/' + slug + '?_method=DELETE';
+      deleteForm.action = url;
+      deleteForm.submit();
     }
   }
 </script>
