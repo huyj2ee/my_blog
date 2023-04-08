@@ -1,7 +1,9 @@
-const adminRouter = require('./admin');
+const blogsRouter = require('./blogs');
+const projectsRouter = require('./projects');
 
 function route(app) {
-  app.use('/admin', adminRouter);
+  app.use('/admin', blogsRouter);
+  app.use('/admin', projectsRouter);
   /*app.get('/trang-chu', (req, res) => {
   res.render('home')
   })*/

@@ -1,6 +1,6 @@
 const Blog = require('../dao/Blog');
 
-class AdminController {
+class BlogController {
   viewBlog(req, res, next) {
     Blog.findAll({
       where: {
@@ -82,4 +82,4 @@ class AdminController {
   }
 }
 
-module.exports = new AdminController;
+module.exports = new BlogController;

@@ -1,0 +1,41 @@
+<div>
+  <a href="/admin/project">New project</a>
+</div>
+<form name="delete-project" method="POST">
+</form>
+
+<script>
+  function onDelete(slug) {
+    let deleteForm = document.forms['delete-project'];
+    let result = confirm('Do you want to delete?');
+    if (result) {
+      let url = window.location + '/' + slug + '?_method=DELETE';
+      deleteForm.action = url;
+      deleteForm.submit();
+    }
+  }
+</script>
+{{#each projects}}
+  <div>
+    <span>Slug: </span>
+    <span>{{this.slug}}</span>
+  </div>
+  <div>
+    <span>Name: </span>
+    <span>{{this.name}}</span>
+  </div>
+  <div>
+    <span>Brief: </span>
+    <span>{{this.brief}}</span>
+  </div>
+  <div>
+    <span>Image: </span>
+    <a href="{{this.img}}" target="_blank" rel="noopener noreferrer">view image</span>
+  </div>
+  <div>
+    <a href="/admin/project/{{this.slug}}">View</a>
+    <a href="/admin/projects/{{this.slug}}">Edit</a>
+    <a href="javascript:;" onclick="onDelete('{{this.slug}}');">Delete</a>
+  </div>
+  <hr />
+{{/each}}

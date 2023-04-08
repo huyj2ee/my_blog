@@ -3,8 +3,23 @@
 <head>
     <meta charset="utf-8">
     <title>Blogger</title>
+    <style>
+        .header-menu {
+            display: flex;
+            align-content: space-between;
+        }
+
+        .header-menu a {
+            margin-right: 20px;
+        }
+    </style>
 </head>
 <body>
+    <div class="header-menu">
+        <a href="http://localhost:3000/admin/blogs">Blogs</a>
+        <a href="http://localhost:3000/admin/projects">Projects</a>
+    </div>
+    <hr />
 
     {{{body}}}
 
