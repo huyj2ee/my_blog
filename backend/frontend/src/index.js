@@ -37,7 +37,7 @@ function Projects() {
     <div className="content-section">
       <div className="project-list">
         <div className="project-item">
-          <img src="static/img/CaKiengPhongThuy.jpg" alt="CaKiengPhongThuy" className="project-img"/>
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg-rLKfh_LgEhpIoq0cJMGFNHV2EcDwnL0hPCZ4zDZxhe5uY8fPRuU15X6LMq0XtlEQ-RxtgFop5zFKJHpWKyhZxNg1IVQ4DLGZA16iO98u_T6itNBGicj33uyKz0ELT0kcHj7exDC0Ljq_fU0Ix_rWap-SYBj_xLeaTWzh6G9jvzJN-yfRvXPoxwRKBQ/s1600/CaKiengPhongThuy.jpg" alt="CaKiengPhongThuy" className="project-img"/>
           <div className="project-body">
             <h3 className="project-heading">Simple Store</h3>
             <p className="project-brief-desc">A simple store web application deployed in Blogspot platform.</p>
@@ -45,7 +45,7 @@ function Projects() {
           </div>  
         </div>
         <div className="project-item">
-          <img src="https://www.w3schools.com/w3images/paris.jpg" alt="project 2" className="project-img"/>
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhxFcH84XTJCKoj06QzhsQoJsri1ANz6dZxqlyngvaTd3umzpKSe5lno6GWUICDk-ZrBH2J0r-1nHZfH4KXShn3UCyDOeKNJkbi4QUJeE1-_U9YRRa5YjpGDfQPizqxqAyO0FUi1Bw0q2icG3KE4t2FVWOCYgunqF8ZjVzx0iyzFzkxdw-D1EsZAJrv7Q/s16000/Line98.jpg" alt="project 2" className="project-img"/>
           <div className="project-body">
             <h3 className="project-heading">Project 2</h3>
             <p className="project-brief-desc">Project description 2</p>
@@ -73,6 +73,43 @@ function Projects() {
   );
 }
 
+function Blogs() {
+  return (
+    <div className="blog-list">
+      <div className="blog-item">
+        <h2>Blog 1</h2>
+        <div className="blog-item-brief">
+          React uses lifting state up to share state between components. The truthful source of state is lifted and stored in the higher level component. If we change the class hierarchy, the state redesign may be need. Redux is a framework support decouple the state to an independence truthful source to make state source is more predictable. This blog entry shares some concepts and how to implement an application powered by React, Redux framework. Audience : software engineer with Javascript knowledge
+        </div>
+        <div className="blog-detail">
+          READ MORE
+        </div>
+      </div>
+      <div className="blog-item">
+        <h2>Blog 2</h2>
+        <div className="blog-item-brief">
+        Taiga is a free and open-source project management system for startups. Its frontend is written in AngularJS and CoffeeScript; backend, in Django and Python. Exploring Taiga source code is helpfull for improving Django and AngularJS programming skills. This blog entry shares steps to setup a developing environment for such exploring. Audience: software engineer – Topic: Django, AngularJS programming I. Introduction Taiga is composed by two mandatory components: Taiga back-end and Taiga front-end. The back-end one provides services as REST apis.
+        </div>
+        <div className="blog-detail">
+          READ MORE
+        </div>
+      </div>
+      <div className="blog-item">
+        <h2>Blog 3</h2>
+        <div className="blog-item-brief">
+          Taiga is a free and open-source project management system for startups. Its frontend is written in AngularJS and CoffeeScript; backend, in Django and Python. Exploring Taiga source code is helpfull for improving Django and AngularJS programming skills. This blog entry shares steps to setup a developing environment for such exploring. Audience: software engineer – Topic: Django, AngularJS programming I. Introduction Taiga is composed by two mandatory components: Taiga back-end and Taiga front-end. The back-end one provides services as REST apis.
+        </div>
+        <div className="blog-detail">
+          READ MORE
+        </div>
+      </div>
+      <div className="more-blog">
+        MORE BLOGS
+      </div>
+    </div>
+  );
+}
+
 function HomePage() {
   return (
     <div className="content-section">
@@ -84,6 +121,13 @@ function HomePage() {
   );
 }
 
+function CV() {
+  return (
+    <div className="cv-container">
+      <h2>Hello world</h2>
+    </div>
+  );
+}
 function App() {
   return (
     <Router>
@@ -93,7 +137,7 @@ function App() {
           <nav style={{display: "inline-block"}}><ul id="nav">
             <li><Link to="/">Home</Link></li>
             <li><Link to="/projs">Projects</Link></li>
-            <li><a href="#1">Blogs</a></li>
+            <li><Link to="/blogs">Blogs</Link></li>
             <li><Link to="/contact">Contact</Link></li>
             <li>
               <a href="#1">
@@ -101,7 +145,7 @@ function App() {
                 <i className="nav-expanding-arrow"></i>
               </a>
               <ul className="subnav">
-                <li><a href="#1">CV</a></li>
+                <li><Link to="/cv">CV</Link></li>
                 <li><a href="#1">Portfolio</a></li>
               </ul>
             </li>
@@ -119,7 +163,9 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage/>} />
             <Route path="/projs" element={<Projects/>} />
+            <Route path="/blogs" element={<Blogs/>} />
             <Route path="/contact" element={<Contact/>} />
+            <Route path="/cv" element={<CV/>} />
           </Routes>
         </div>
 
