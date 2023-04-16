@@ -20,6 +20,9 @@ BEGIN_TEMPLATE = """<?xml version="1.0" encoding="UTF-8" ?>
               border: none;
             }
         </style>
+        <script>
+            window['ROOT_PAGE_ID'] = '4942923408969016479';
+        </script>
         <div id="root"></div>
         <b:section id='page_body'/>
 """
