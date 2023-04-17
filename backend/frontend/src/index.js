@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { Provider, connect } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import axios from 'axios';
+import axiosMiddleware from 'redux-axios-middleware';
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Link
 } from 'react-router-dom';
+import { BLOG_ID, ROOT_ID, API_KEY } from './utils/constant';
+import HomePage from './components/HomePage';
 import './style.css';
 
 
@@ -110,17 +116,6 @@ function Blogs() {
   );
 }
 
-function HomePage() {
-  return (
-    <div className="content-section">
-      <h2 className="section-heading">Huy Pham</h2>
-      <p className="section-sub-heading">I love software engineering.</p>
-      <img className="about-photo" src="https://avatars.githubusercontent.com/u/44170390?v=4" alt="huypham"/>
-      <p className="about-content">I'm an experienced software engineer who constantly seeks out solutions to software and firmware problems. In my 7 years in this industry, I have honed my analyst, design and coding skills. I love software engineering, I have 3.5 years experience in software developing and 3.5 years in firmware developing, I also have experience in software, firmware porting. My current goal is becoming a technical architecture to have more chance to analyze and design, I also implement some simple projects to fulfill my goal. You can explore my projects on projects page.</p>
-    </div>
-  );
-}
-
 function CV() {
   return (
     <div className="cv-container">
@@ -128,59 +123,145 @@ function CV() {
     </div>
   );
 }
-function App() {
-  return (
-    <Router>
-      <div id="main">
-        <div id="header">
-          {/* Begin: nav */}
-          <nav style={{display: "inline-block"}}><ul id="nav">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/projs">Projects</Link></li>
-            <li><Link to="/blogs">Blogs</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
-            <li>
-              <a href="#1">
-                More
-                <i className="nav-expanding-arrow"></i>
-              </a>
-              <ul className="subnav">
-                <li><Link to="/cv">CV</Link></li>
-                <li><a href="#1">Portfolio</a></li>
-              </ul>
-            </li>
-          </ul></nav>
-          {/* End: nav */}
 
-          {/* Begin: search button */}
-          <div className="search-btn">
-            <i className="search-icon ti-search"></i>
+const dispatchToPropsAppMap =
+  dispatch => {
+    return {
+      loadRoot: () => {
+        dispatch(
+          {
+            type: 'LOAD_ROOT',
+            payload: {
+              request: {
+                method: 'GET',
+                url: '/' + BLOG_ID + '/posts/' + ROOT_ID + '?key=' + API_KEY,
+                data: {
+                }
+              }
+            } 
+          }
+        )
+      }
+    }
+  };
+
+const stateToPropsAppMap = null;
+
+const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
+  function (props) {
+    useEffect(()=>{
+      if (typeof props.loadRoot === "function")
+        props.loadRoot();
+    },[props]);
+
+    return (
+      <Router>
+        <div id="main">
+          <div id="header">
+            {/* Begin: nav */}
+            <nav style={{display: "inline-block"}}><ul id="nav">
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/projs">Projects</Link></li>
+              <li><Link to="/blogs">Blogs</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
+              <li>
+                <a href="#1">
+                  More
+                  <i className="nav-expanding-arrow"></i>
+                </a>
+                <ul className="subnav">
+                  <li><Link to="/cv">CV</Link></li>
+                  <li><a href="#1">Portfolio</a></li>
+                </ul>
+              </li>
+            </ul></nav>
+            {/* End: nav */}
+
+            {/* Begin: search button */}
+            <div className="search-btn">
+              <i className="search-icon ti-search"></i>
+            </div>
+            {/* End: search button */}
           </div>
-          {/* End: search button */}
-        </div>
 
-        <div id="content">
-          <Routes>
-            <Route path="/" element={<HomePage/>} />
-            <Route path="/projs" element={<Projects/>} />
-            <Route path="/blogs" element={<Blogs/>} />
-            <Route path="/contact" element={<Contact/>} />
-            <Route path="/cv" element={<CV/>} />
-          </Routes>
-        </div>
-
-        <div id="footer">
-          <div>
-            Powered by ReactJS
+          <div id="content">
+            <Routes>
+              <Route path="/" element={<HomePage/>} />
+              <Route path="/projs" element={<Projects/>} />
+              <Route path="/blogs" element={<Blogs/>} />
+              <Route path="/contact" element={<Contact/>} />
+              <Route path="/cv" element={<CV/>} />
+            </Routes>
           </div>
-          <div>
-              &copy; huyj2ee.blogspot.com
+
+          <div id="footer">
+            <div>
+              Powered by ReactJS
+            </div>
+            <div>
+                &copy; huyj2ee.blogspot.com
+            </div>
           </div>
         </div>
-      </div>
-    </Router>
-  );
-}
+      </Router>
+    );
+  }
+);
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const reducer = (state = 0, action) => {
+  let obj = null;
+  switch (action.type) {
+    case "LOAD_ROOT_FAIL":
+    case "LOAD_HOME_FAIL":
+      alert(JSON.stringify(action));
+      return Object.assign(
+        {},
+        state,
+        {
+        }
+      );
+
+    case "LOAD_ROOT_SUCCESS":
+      obj = JSON.parse(action.payload.data.content);
+      return Object.assign(
+        {},
+        state,
+        obj
+      );
+      
+    case "LOAD_HOME_SUCCESS":
+      obj = JSON.parse(action.payload.data.content);
+      return Object.assign(
+        {},
+        state,
+        {
+           homePage: obj
+	}
+      );
+
+    default:
+      return state;
+  }
+};
+
+const client = axios.create({
+  baseURL: 'https://www.googleapis.com/blogger/v3/blogs/',
+  responseType: 'json'
+});
+
+const store = createStore(
+  reducer,
+  {
+  },
+  applyMiddleware(
+    axiosMiddleware(client)
+  )
+);
+
+ReactDOM.render(
+  <Provider store = {store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
 
