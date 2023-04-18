@@ -4,7 +4,7 @@ from urllib.request import Request, urlopen
 import sqlite3
 import json
 
-WAIT_SECONDS=10
+WAIT_SECONDS=20
 BLOG_ID = '904737282308882794'
 access_token = input('Enter access token: ')
 
@@ -92,8 +92,9 @@ for row in cursor:
   project['name'] = row[1]
   project['brief'] = row[2]
   project['document'] = row[3]
+  projectJson = json.dumps(project['document'])
   print('Publish project ' + project['name'])
-  project['slug'] = post('[project] ' + project['name'], project['document'])
+  project['slug'] = post('[project] ' + project['name'], projectJson)
   project.pop('document', None)
   projects.append(dict(project))
 print('Publish projects list')
@@ -114,7 +115,8 @@ for row in cursor:
   blog['brief'] = row[1]
   blog['content'] = row[2]
   print('Publish blog ' + blog['title'])
-  blog['slug'] = post('[blog] ' + blog['title'], blog['content'])
+  blogJson = json.dumps(blog['content'])
+  blog['slug'] = post('[blog] ' + blog['title'], blogJson)
   blog.pop('content', None)
   blogs.append(dict(blog))
 
@@ -133,7 +135,8 @@ cursor = connection.execute(''.join([
 for row in cursor:
   cv['content'] = row[0]
 print('Publish CV page')
-root['cvPageId'] = post('CV page', cv['content'])
+cvJson = json.dumps(cv['content'])
+root['cvPageId'] = post('CV page', cvJson)
 print('')
 
 #Publish root page
