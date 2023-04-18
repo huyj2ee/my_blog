@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BLOG_ID, API_KEY } from '../utils/constant';
+import NowLoading from './NowLoading';
 
 const dispatchToPropsHomeMap =
   dispatch => {
@@ -44,7 +45,7 @@ const HomePage = connect(stateToPropsHomeMap, dispatchToPropsHomeMap)(
         <img className="about-photo" src={props.homePage.img} alt={props.homePage.name} />
         <p className="about-content">{props.homePage.content}</p>
       </div>
-    ) : null;
+    ) : <NowLoading />;
   }
 );
 

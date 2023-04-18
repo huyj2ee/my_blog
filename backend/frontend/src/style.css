@@ -116,6 +116,10 @@ html {
   margin-right: auto;
 }
 
+.now-loading {
+  text-align: center;
+}
+
 #content .section-heading {
   font-size: 30px;
   font-weight: 500;
