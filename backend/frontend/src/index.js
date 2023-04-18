@@ -13,6 +13,7 @@ import {
 import { BLOG_ID, ROOT_ID, API_KEY } from './utils/constant';
 import HomePage from './components/HomePage';
 import Contact from './components/Contact';
+import CV from './components/CV';
 import './style.css';
 
 function Projects() {
@@ -89,14 +90,6 @@ function Blogs() {
       <div className="more-blog">
         MORE BLOGS
       </div>
-    </div>
-  );
-}
-
-function CV() {
-  return (
-    <div className="cv-container">
-      <h2>Hello world</h2>
     </div>
   );
 }
@@ -188,8 +181,9 @@ const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
 const reducer = (state = 0, action) => {
   let obj = null;
   switch (action.type) {
-    case "LOAD_ROOT_FAIL":
-    case "LOAD_HOME_FAIL":
+    case 'LOAD_ROOT_FAIL':
+    case 'LOAD_HOME_FAIL':
+    case 'LOAD_CV_FAIL':
       alert(JSON.stringify(action));
       return Object.assign(
         {},
@@ -198,7 +192,7 @@ const reducer = (state = 0, action) => {
         }
       );
 
-    case "LOAD_ROOT_SUCCESS":
+    case 'LOAD_ROOT_SUCCESS':
       obj = JSON.parse(action.payload.data.content);
       return Object.assign(
         {},
@@ -206,14 +200,24 @@ const reducer = (state = 0, action) => {
         obj
       );
       
-    case "LOAD_HOME_SUCCESS":
+    case 'LOAD_HOME_SUCCESS':
       obj = JSON.parse(action.payload.data.content);
       return Object.assign(
         {},
         state,
         {
            homePage: obj
-	}
+	      }
+      );
+
+    case 'LOAD_CV_SUCCESS':
+      obj = JSON.parse(action.payload.data.content);
+      return Object.assign(
+        {},
+        state,
+        {
+           CV: obj
+	      }
       );
 
     default:
