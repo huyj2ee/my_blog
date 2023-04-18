@@ -21,7 +21,7 @@ BEGIN_TEMPLATE = """<?xml version="1.0" encoding="UTF-8" ?>
             }
         </style>
         <script>
-            window['ROOT_PAGE_ID'] = '4942923408969016479';
+            window['ROOT_PAGE_ID'] = '9113069058487721883';
         </script>
         <div id="root"></div>
         <b:section id='page_body'/>
