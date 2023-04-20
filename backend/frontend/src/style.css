@@ -156,7 +156,6 @@ html {
 .project-list {
   margin-left: -8px;
   margin-right: -8px;
-  padding-bottom: 24px;
   display: flex;
   flex-wrap: wrap;
 }

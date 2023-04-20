@@ -14,48 +14,8 @@ import { BLOG_ID, ROOT_ID, API_KEY } from './utils/constant';
 import HomePage from './components/HomePage';
 import Contact from './components/Contact';
 import CV from './components/CV';
+import ProjectsList from './components/ProjectsList';
 import './style.css';
-
-function Projects() {
-  return (
-    <div className="content-section">
-      <div className="project-list">
-        <div className="project-item">
-          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg-rLKfh_LgEhpIoq0cJMGFNHV2EcDwnL0hPCZ4zDZxhe5uY8fPRuU15X6LMq0XtlEQ-RxtgFop5zFKJHpWKyhZxNg1IVQ4DLGZA16iO98u_T6itNBGicj33uyKz0ELT0kcHj7exDC0Ljq_fU0Ix_rWap-SYBj_xLeaTWzh6G9jvzJN-yfRvXPoxwRKBQ/s1600/CaKiengPhongThuy.jpg" alt="CaKiengPhongThuy" className="project-img"/>
-          <div className="project-body">
-            <h3 className="project-heading">Simple Store</h3>
-            <p className="project-brief-desc">A simple store web application deployed in Blogspot platform.</p>
-            <a href="#1" className="project-view-detail">View detail</a>
-          </div>  
-        </div>
-        <div className="project-item">
-          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhxFcH84XTJCKoj06QzhsQoJsri1ANz6dZxqlyngvaTd3umzpKSe5lno6GWUICDk-ZrBH2J0r-1nHZfH4KXShn3UCyDOeKNJkbi4QUJeE1-_U9YRRa5YjpGDfQPizqxqAyO0FUi1Bw0q2icG3KE4t2FVWOCYgunqF8ZjVzx0iyzFzkxdw-D1EsZAJrv7Q/s16000/Line98.jpg" alt="project 2" className="project-img"/>
-          <div className="project-body">
-            <h3 className="project-heading">Project 2</h3>
-            <p className="project-brief-desc">Project description 2</p>
-            <a href="#1" className="project-view-detail">View detail</a>
-          </div>  
-        </div>
-        <div className="project-item">
-          <img src="https://www.w3schools.com/w3images/sanfran.jpg" alt="project 3" className="project-img"/>
-          <div className="project-body">
-            <h3 className="project-heading">Project 3</h3>
-            <p className="project-brief-desc">Project description 3</p>
-            <a href="#1" className="project-view-detail">View detail</a>
-          </div>  
-        </div>
-        <div class="project-item">
-          <img src="https://www.w3schools.com/w3images/sanfran.jpg" alt="project 3" className="project-img"/>
-          <div className="project-body">
-            <h3 className="project-heading">Project 4</h3>
-            <p className="project-brief-desc">Project description 4</p>
-            <a href="#1" className="project-view-detail">View detail</a>
-          </div>  
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function Blogs() {
   return (
@@ -157,7 +117,7 @@ const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
           <div id="content">
             <Routes>
               <Route path="/" element={<HomePage/>} />
-              <Route path="/projs" element={<Projects/>} />
+              <Route path="/projs" element={<ProjectsList/>} />
               <Route path="/blogs" element={<Blogs/>} />
               <Route path="/contact" element={<Contact/>} />
               <Route path="/cv" element={<CV/>} />
@@ -184,6 +144,7 @@ const reducer = (state = 0, action) => {
     case 'LOAD_ROOT_FAIL':
     case 'LOAD_HOME_FAIL':
     case 'LOAD_CV_FAIL':
+    case 'LOAD_PROJECTS_LIST_FAIL':
       alert(JSON.stringify(action));
       return Object.assign(
         {},
@@ -207,6 +168,16 @@ const reducer = (state = 0, action) => {
         state,
         {
            homePage: obj
+	      }
+      );
+
+    case 'LOAD_PROJECTS_LIST_SUCCESS':
+      obj = JSON.parse(action.payload.data.content);
+      return Object.assign(
+        {},
+        state,
+        {
+           projectsList: obj
 	      }
       );
 
