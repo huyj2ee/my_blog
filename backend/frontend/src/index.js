@@ -156,6 +156,15 @@ const reducer = (state = 0, action) => {
         }
       );
 
+    case 'CLEAR_PROJECTS_LIST':
+      return Object.assign(
+        {},
+        state,
+        {
+          projectsList: undefined
+        }
+      );
+
     case 'CLEAR_PROJECT':
       return Object.assign(
         {},

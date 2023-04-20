@@ -21,6 +21,13 @@ const dispatchToPropsProjectsMap =
             } 
           }
         )
+      },
+      clearProjectList: () => {
+        dispatch(
+          {
+            type: 'CLEAR_PROJECTS_LIST'
+          }
+        )
       }
     }
   };
@@ -37,6 +44,10 @@ const ProjectsList = connect(stateToPropsProjectsMap, dispatchToPropsProjectsMap
     useEffect(()=>{
       if (typeof props.loadProjectsList === "function" && props.projectsListId && !props.projectsList)
         props.loadProjectsList(props.projectsListId);
+      return () => {
+        if (typeof props.clearProjectList === 'function' && props.projectsList)
+          props.clearProjectList();
+      };
     },[props]);
   
     let projectItems =[];
