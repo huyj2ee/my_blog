@@ -106,7 +106,7 @@ html {
 #content {
   margin-top: 46px;
   background-color: #ccc;
-  min-height: 620px;
+  min-height: calc(100vh - 46px - 64px);
 }
 
 #content .content-section {
@@ -117,7 +117,10 @@ html {
 }
 
 .now-loading {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 46px - 64px);
 }
 
 #content .section-heading {
@@ -275,6 +278,7 @@ html {
 }
 
 #footer {
+  height: 64px;
   padding: 16px;
   text-align: center;
   background-color: #000;
