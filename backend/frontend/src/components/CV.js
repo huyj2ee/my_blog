@@ -43,7 +43,7 @@ const CV = connect(stateToPropsCVMap, dispatchToPropsCVMap)(
     },[props]);
 
     return props.CV ? (
-      <div className="cv-container">
+      <div className="document-container">
         <div ref={cvContainer}></div>
       </div>
     ) : <NowLoading />;

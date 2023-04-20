@@ -15,6 +15,7 @@ import HomePage from './components/HomePage';
 import Contact from './components/Contact';
 import CV from './components/CV';
 import ProjectsList from './components/ProjectsList';
+import Project from './components/Project';
 import './style.css';
 
 function Blogs() {
@@ -118,6 +119,7 @@ const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
             <Routes>
               <Route path="/" element={<HomePage/>} />
               <Route path="/projs" element={<ProjectsList/>} />
+              <Route path="/proj"  element={<Project/>} />
               <Route path="/blogs" element={<Blogs/>} />
               <Route path="/contact" element={<Contact/>} />
               <Route path="/cv" element={<CV/>} />
@@ -145,11 +147,21 @@ const reducer = (state = 0, action) => {
     case 'LOAD_HOME_FAIL':
     case 'LOAD_CV_FAIL':
     case 'LOAD_PROJECTS_LIST_FAIL':
+    case 'LOAD_PROJECT_FAIL':
       alert(JSON.stringify(action));
       return Object.assign(
         {},
         state,
         {
+        }
+      );
+
+    case 'CLEAR_PROJECT':
+      return Object.assign(
+        {},
+        state,
+        {
+          project: undefined
         }
       );
 
@@ -190,6 +202,16 @@ const reducer = (state = 0, action) => {
            CV: obj
 	      }
       );
+
+    case 'LOAD_PROJECT_SUCCESS':
+    obj = JSON.parse(action.payload.data.content);
+    return Object.assign(
+      {},
+      state,
+      {
+         project: obj
+      }
+    );
 
     default:
       return state;
