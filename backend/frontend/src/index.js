@@ -18,6 +18,7 @@ import CV from './components/CV';
 import ProjectsList from './components/ProjectsList';
 import Project from './components/Project';
 import BlogsList from './components/BlogsList';
+import Blog from './components/Blog';
 import './style.css';
 
 const dispatchToPropsAppMap =
@@ -38,10 +39,17 @@ const dispatchToPropsAppMap =
           }
         )
       },
-      clearProjectList: () => {
+      clearProjectsList: () => {
         dispatch(
           {
             type: 'CLEAR_PROJECTS_LIST'
+          }
+        )
+      },
+      clearBlogsList: () => {
+        dispatch(
+          {
+            type: 'CLEAR_BLOGS_LIST'
           }
         )
       }
@@ -50,7 +58,8 @@ const dispatchToPropsAppMap =
 
 const stateToPropsAppMap = (state) => {
   return {
-      projectsList: state.projectsList
+      projectsList: state.projectsList,
+      blogsList: state.blogsList
   };
 };
 
@@ -58,8 +67,11 @@ const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
   function (props) {
     const location = useLocation();
 
-    if(location.pathname !== '/projs' && location.pathname !== '/proj' && props.projectsList && typeof props.clearProjectList === 'function')
-      props.clearProjectList();
+    if(location.pathname !== '/projs' && location.pathname !== '/proj' && props.projectsList && typeof props.clearProjectsList === 'function')
+      props.clearProjectsList();
+
+    if(location.pathname !== '/blogs' && location.pathname !== '/blog' && props.blogsList && typeof props.clearBlogsList === 'function')
+      props.clearBlogsList();
 
     useEffect(()=>{
       if (typeof props.loadRoot === 'function')
@@ -100,6 +112,7 @@ const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
             <Route path="/projs" element={<ProjectsList/>} />
             <Route path="/proj"  element={<Project/>} />
             <Route path="/blogs" element={<BlogsList/>} />
+            <Route path="/blog" element={<Blog/>} />
             <Route path="/contact" element={<Contact/>} />
             <Route path="/cv" element={<CV/>} />
           </Routes>
@@ -126,6 +139,7 @@ const reducer = (state = 0, action) => {
     case 'LOAD_PROJECTS_LIST_FAIL':
     case 'LOAD_PROJECT_FAIL':
     case 'LOAD_BLOGS_LIST_FAIL':
+    case 'LOAD_BLOG_FAIL':
     case 'LOAD_CV_FAIL':
       alert(JSON.stringify(action));
       return Object.assign(
@@ -150,6 +164,24 @@ const reducer = (state = 0, action) => {
         state,
         {
           project: undefined
+        }
+      );
+
+    case 'CLEAR_BLOGS_LIST':
+    return Object.assign(
+      {},
+      state,
+      {
+        blogsList: undefined
+      }
+    );
+
+    case 'CLEAR_BLOG':
+      return Object.assign(
+        {},
+        state,
+        {
+          blog: undefined
         }
       );
 
@@ -181,16 +213,6 @@ const reducer = (state = 0, action) => {
 	      }
       );
 
-    case 'LOAD_CV_SUCCESS':
-      obj = JSON.parse(action.payload.data.content);
-      return Object.assign(
-        {},
-        state,
-        {
-           CV: obj
-	      }
-      );
-
     case 'LOAD_PROJECT_SUCCESS':
     obj = JSON.parse(action.payload.data.content);
     return Object.assign(
@@ -210,6 +232,26 @@ const reducer = (state = 0, action) => {
         blogsList: obj
       }
     );
+
+    case 'LOAD_BLOG_SUCCESS':
+    obj = JSON.parse(action.payload.data.content);
+    return Object.assign(
+      {},
+      state,
+      {
+         blog: obj
+      }
+    );
+
+    case 'LOAD_CV_SUCCESS':
+      obj = JSON.parse(action.payload.data.content);
+      return Object.assign(
+        {},
+        state,
+        {
+           CV: obj
+	      }
+      );
 
     default:
       return state;
