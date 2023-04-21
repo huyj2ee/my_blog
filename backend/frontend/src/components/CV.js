@@ -20,6 +20,13 @@ const dispatchToPropsCVMap =
             } 
           }
         )
+      },
+      clearCV: () => {
+        dispatch(
+          {
+            type: 'CLEAR_CV'
+          }
+        )
       }
     }
   };
@@ -39,7 +46,11 @@ const CV = connect(stateToPropsCVMap, dispatchToPropsCVMap)(
         props.loadCV(props.cvPageId);
       if (props.CV) {
         cvContainer.current.innerHTML = props.CV;
-      }    
+      }
+      return () => {
+        if (typeof props.clearCV === 'function' && props.CV)
+          props.clearCV();
+      };
     },[props]);
 
     return props.CV ? (

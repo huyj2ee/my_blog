@@ -185,6 +185,15 @@ const reducer = (state = 0, action) => {
         }
       );
 
+    case 'CLEAR_CV':
+      return Object.assign(
+        {},
+        state,
+        {
+          CV: undefined
+        }
+      );
+
     case 'LOAD_ROOT_SUCCESS':
       obj = JSON.parse(action.payload.data.content);
       return Object.assign(
