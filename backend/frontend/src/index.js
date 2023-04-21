@@ -8,7 +8,8 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Link
+  Link,
+  useLocation
 } from 'react-router-dom';
 import { BLOG_ID, ROOT_ID, API_KEY } from './utils/constant';
 import HomePage from './components/HomePage';
@@ -72,70 +73,83 @@ const dispatchToPropsAppMap =
             } 
           }
         )
+      },
+      clearProjectList: () => {
+        dispatch(
+          {
+            type: 'CLEAR_PROJECTS_LIST'
+          }
+        )
       }
     }
   };
 
-const stateToPropsAppMap = null;
+const stateToPropsAppMap = (state) => {
+  return {
+      projectsList: state.projectsList
+  };
+};
 
 const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
   function (props) {
+    const location = useLocation();
+
+    if(location.pathname !== '/projs' && location.pathname !== '/proj' && props.projectsList && typeof props.clearProjectList === 'function')
+      props.clearProjectList();
+
     useEffect(()=>{
-      if (typeof props.loadRoot === "function")
+      if (typeof props.loadRoot === 'function')
         props.loadRoot();
     },[props]);
 
     return (
-      <Router>
-        <div id="main">
-          <div id="header">
-            {/* Begin: nav */}
-            <nav style={{display: "inline-block"}}><ul id="nav">
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/projs">Projects</Link></li>
-              <li><Link to="/blogs">Blogs</Link></li>
-              <li><Link to="/contact">Contact</Link></li>
-              <li>
-                <a href="#1">
-                  More
-                  <i className="nav-expanding-arrow"></i>
-                </a>
-                <ul className="subnav">
-                  <li><Link to="/cv">CV</Link></li>
-                  <li><a href="#1">Portfolio</a></li>
-                </ul>
-              </li>
-            </ul></nav>
-            {/* End: nav */}
+      <div id="main">
+        <div id="header">
+          {/* Begin: nav */}
+          <nav style={{display: "inline-block"}}><ul id="nav">
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/projs">Projects</Link></li>
+            <li><Link to="/blogs">Blogs</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+            <li>
+              <a href="#1">
+                More
+                <i className="nav-expanding-arrow"></i>
+              </a>
+              <ul className="subnav">
+                <li><Link to="/cv">CV</Link></li>
+              </ul>
+            </li>
+          </ul></nav>
+          {/* End: nav */}
 
-            {/* Begin: search button */}
-            <div className="search-btn">
-              <i className="search-icon ti-search"></i>
-            </div>
-            {/* End: search button */}
+          {/* Begin: search button */}
+          <div className="search-btn">
+            <i className="search-icon ti-search"></i>
           </div>
+          {/* End: search button */}
+        </div>
 
-          <div id="content">
-            <Routes>
-              <Route path="/" element={<HomePage/>} />
-              <Route path="/projs" element={<ProjectsList/>} />
-              <Route path="/proj"  element={<Project/>} />
-              <Route path="/blogs" element={<Blogs/>} />
-              <Route path="/contact" element={<Contact/>} />
-              <Route path="/cv" element={<CV/>} />
-            </Routes>
+        <div id="content">
+          <Routes>
+            <Route path="/" element={<HomePage/>} />
+            <Route path="/projs" element={<ProjectsList/>} />
+            <Route path="/proj"  element={<Project/>} />
+            <Route path="/blogs" element={<Blogs/>} />
+            <Route path="/contact" element={<Contact/>} />
+            <Route path="/cv" element={<CV/>} />
+          </Routes>
+        </div>
+
+        <div id="footer">
+          <div>
+            Powered by ReactJS
           </div>
-
-          <div id="footer">
-            <div>
-              Powered by ReactJS
-            </div>
-            <div>
-                &copy; huyj2ee.blogspot.com
-            </div>
+          <div>
+              &copy; huyj2ee.blogspot.com
           </div>
         </div>
-      </Router>
+      </div>
     );
   }
 );
@@ -243,7 +257,9 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store = {store}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
