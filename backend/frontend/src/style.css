@@ -256,6 +256,7 @@ html {
   float: right;
   color: #0000ff;
   font-weight: bold;
+  text-decoration: none;
 }
 
 .blog-list .blog-item .blog-item-brief {
@@ -266,6 +267,7 @@ html {
   margin: 24px auto 0 auto;
   color: #0000ff;
   font-weight: bold;
+  text-decoration: none;
 }
 
 .document-container {

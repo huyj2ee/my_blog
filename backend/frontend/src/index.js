@@ -17,44 +17,8 @@ import Contact from './components/Contact';
 import CV from './components/CV';
 import ProjectsList from './components/ProjectsList';
 import Project from './components/Project';
+import BlogsList from './components/BlogsList';
 import './style.css';
-
-function Blogs() {
-  return (
-    <div className="blog-list">
-      <div className="blog-item">
-        <h2>Blog 1</h2>
-        <div className="blog-item-brief">
-          React uses lifting state up to share state between components. The truthful source of state is lifted and stored in the higher level component. If we change the class hierarchy, the state redesign may be need. Redux is a framework support decouple the state to an independence truthful source to make state source is more predictable. This blog entry shares some concepts and how to implement an application powered by React, Redux framework. Audience : software engineer with Javascript knowledge
-        </div>
-        <div className="blog-detail">
-          READ MORE
-        </div>
-      </div>
-      <div className="blog-item">
-        <h2>Blog 2</h2>
-        <div className="blog-item-brief">
-        Taiga is a free and open-source project management system for startups. Its frontend is written in AngularJS and CoffeeScript; backend, in Django and Python. Exploring Taiga source code is helpfull for improving Django and AngularJS programming skills. This blog entry shares steps to setup a developing environment for such exploring. Audience: software engineer – Topic: Django, AngularJS programming I. Introduction Taiga is composed by two mandatory components: Taiga back-end and Taiga front-end. The back-end one provides services as REST apis.
-        </div>
-        <div className="blog-detail">
-          READ MORE
-        </div>
-      </div>
-      <div className="blog-item">
-        <h2>Blog 3</h2>
-        <div className="blog-item-brief">
-          Taiga is a free and open-source project management system for startups. Its frontend is written in AngularJS and CoffeeScript; backend, in Django and Python. Exploring Taiga source code is helpfull for improving Django and AngularJS programming skills. This blog entry shares steps to setup a developing environment for such exploring. Audience: software engineer – Topic: Django, AngularJS programming I. Introduction Taiga is composed by two mandatory components: Taiga back-end and Taiga front-end. The back-end one provides services as REST apis.
-        </div>
-        <div className="blog-detail">
-          READ MORE
-        </div>
-      </div>
-      <div className="more-blog">
-        MORE BLOGS
-      </div>
-    </div>
-  );
-}
 
 const dispatchToPropsAppMap =
   dispatch => {
@@ -135,7 +99,7 @@ const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
             <Route path="/" element={<HomePage/>} />
             <Route path="/projs" element={<ProjectsList/>} />
             <Route path="/proj"  element={<Project/>} />
-            <Route path="/blogs" element={<Blogs/>} />
+            <Route path="/blogs" element={<BlogsList/>} />
             <Route path="/contact" element={<Contact/>} />
             <Route path="/cv" element={<CV/>} />
           </Routes>
@@ -159,9 +123,10 @@ const reducer = (state = 0, action) => {
   switch (action.type) {
     case 'LOAD_ROOT_FAIL':
     case 'LOAD_HOME_FAIL':
-    case 'LOAD_CV_FAIL':
     case 'LOAD_PROJECTS_LIST_FAIL':
     case 'LOAD_PROJECT_FAIL':
+    case 'LOAD_BLOGS_LIST_FAIL':
+    case 'LOAD_CV_FAIL':
       alert(JSON.stringify(action));
       return Object.assign(
         {},
@@ -233,6 +198,16 @@ const reducer = (state = 0, action) => {
       state,
       {
          project: obj
+      }
+    );
+
+    case 'LOAD_BLOGS_LIST_SUCCESS':
+    obj = JSON.parse(action.payload.data.content);
+    return Object.assign(
+      {},
+      state,
+      {
+        blogsList: obj
       }
     );
 
