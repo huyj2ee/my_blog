@@ -38,11 +38,13 @@ html {
   position: relative;
 }
 
+#nav > li > span,
 #nav > li > a {
   color: #fff;
   text-transform: uppercase;
 }
 
+#nav li span,
 #nav li a {
   text-decoration: none;
   line-height: 46px;
@@ -55,6 +57,8 @@ html {
   display: block;
 }
 
+#nav > li:hover > span,
+#nav .subnav li:hover span,
 #nav > li:hover > a,
 #nav .subnav li:hover a {
   color: #000;

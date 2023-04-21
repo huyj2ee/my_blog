@@ -88,10 +88,10 @@ const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
             <li><Link to="/blogs">Blogs</Link></li>
             <li><Link to="/contact">Contact</Link></li>
             <li>
-              <a href="#1">
+              <span>
                 More
                 <i className="nav-expanding-arrow"></i>
-              </a>
+              </span>
               <ul className="subnav">
                 <li><Link to="/cv">CV</Link></li>
               </ul>
