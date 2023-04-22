@@ -57,7 +57,7 @@ const Project = connect(stateToPropsProjectMap, dispatchToPropsProjectMap)(
 
     return props.project ? (
       <div className="document-container">
-        <div ref={projectContainer}></div>
+        <div ref={projectContainer} className="document"></div>
       </div>
     ) : <NowLoading />;
   }

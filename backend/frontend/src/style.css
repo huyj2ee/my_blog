@@ -116,7 +116,7 @@ html {
 }
 
 #content .content-section {
-  width: 800px;
+  width: 848px;
   padding: 64px 0;
   margin-left: auto;
   margin-right: auto;
@@ -235,7 +235,7 @@ html {
 }
 
 .blog-list {
-  width: 800px;
+  width: 848px;
   margin-left: auto;
   margin-right: auto;
   padding-top: 48px;
@@ -245,7 +245,7 @@ html {
 }
 
 .blog-list .blog-item {
-  width: 800px;
+  width: 848px;
   /* height: 300px; */
   margin-top: 16px;
   background-color: #fff;
@@ -277,11 +277,17 @@ html {
 }
 
 .document-container {
-  width: 800px;
+  width: 848px;
   margin-left:auto;
   margin-right:auto;
   padding-top:64px;
   padding-bottom:64px;
+}
+
+.document-container .document {
+  width: 100%;
+  padding: 32px;
+  background-color: #fff;
 }
 
 #footer {

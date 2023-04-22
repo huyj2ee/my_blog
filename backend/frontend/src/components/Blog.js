@@ -57,7 +57,7 @@ const Blog = connect(stateToPropsBlogMap, dispatchToPropsBlogMap)(
 
     return props.blog ? (
       <div className="document-container">
-        <div ref={blogContainer}></div>
+        <div ref={blogContainer} className="document"></div>
       </div>
     ) : <NowLoading />;
   }
