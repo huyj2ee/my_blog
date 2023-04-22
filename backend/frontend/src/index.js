@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider, connect } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import axios from 'axios';
@@ -283,12 +283,14 @@ const store = createStore(
   )
 );
 
-ReactDOM.render(
-  <Provider store = {store}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>,
-  document.getElementById('root')
+const root = createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Provider store = {store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
+  </React.StrictMode>
 );
 
