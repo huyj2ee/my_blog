@@ -4,6 +4,7 @@ import { Provider, connect } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import axios from 'axios';
 import axiosMiddleware from 'redux-axios-middleware';
+import { AiOutlineDown, AiOutlineSearch } from "react-icons/ai";
 import {
   BrowserRouter as Router,
   Route,
@@ -90,7 +91,7 @@ const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
             <li>
               <span>
                 More
-                <i className="nav-expanding-arrow"></i>
+                <AiOutlineDown className="nav-more-icon"/>
               </span>
               <ul className="subnav">
                 <li><Link to="/cv">CV</Link></li>
@@ -101,7 +102,8 @@ const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
 
           {/* Begin: search button */}
           <div className="search-btn">
-            <i className="search-icon ti-search"></i>
+            <input name="search-param" placeholder="Search blogs..." style={ {width: "280px", height:"26px", marginTop:"9px", marginRight:"4px"} } />
+            <AiOutlineSearch style={{fontSize: "22px", color:"white", height: "42px", paddingTop: "2px", cursor: "pointer"}}/>
           </div>
           {/* End: search button */}
         </div>
