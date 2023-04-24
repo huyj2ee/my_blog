@@ -11,6 +11,20 @@ import App from './components/App';
 import './style.css';
 
 const reducer = (state = 0, action) => {
+  let getBlogs = function(posts) {
+    let blogs = [];
+    for(let i = 0; i < posts.length; i++) {
+      if(posts[i].title.startsWith('[blog] ')) {
+        let blog = {};
+        blog['title'] = posts[i].title.substring('[blog] '.length);
+        blog['brief'] = JSON.parse(posts[i].content).brief;
+        blog['slug'] = posts[i].id;
+        blogs.push(blog);
+      }
+    }
+    return blogs;
+  }
+
   let obj = null;
   switch (action.type) {
     case 'LOAD_ROOT_FAIL':
@@ -20,6 +34,7 @@ const reducer = (state = 0, action) => {
     case 'LOAD_BLOGS_LIST_FAIL':
     case 'LOAD_BLOG_FAIL':
     case 'LOAD_CV_FAIL':
+    case 'SEARCH_BLOGS_FAIL':
       alert(JSON.stringify(action));
       return Object.assign(
         {},
@@ -47,13 +62,22 @@ const reducer = (state = 0, action) => {
       );
 
     case 'CLEAR_BLOGS_LIST':
-    return Object.assign(
-      {},
-      state,
-      {
-        blogsList: undefined
-      }
-    );
+      return Object.assign(
+        {},
+        state,
+        {
+          blogsList: undefined
+        }
+      );
+
+    case 'CLEAR_FOUND_BLOGS':
+      return Object.assign(
+        {},
+        state,
+        {
+          foundBlogs: undefined
+        }
+      );
 
     case 'CLEAR_BLOG':
       return Object.assign(
@@ -138,9 +162,18 @@ const reducer = (state = 0, action) => {
         state,
         {
            CV: obj
-	      }
+        }
       );
 
+    case 'SEARCH_BLOGS_SUCCESS':
+      obj = action.payload.data.items;
+      return Object.assign(
+        {},
+        state,
+        {
+           foundBlogs: getBlogs(obj)
+        }
+      );
     default:
       return state;
   }

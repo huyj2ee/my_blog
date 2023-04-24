@@ -91,10 +91,25 @@ html {
   font-size: 14px;
 }
 
-#header .search-btn {
+#header .search-container {
   display: flex;
   float: right;
   padding: 0 21px;
+}
+
+#header .search-container .search-input {
+  width: 280px;
+  height:26px;
+  margin-top: 9px;
+  margin-right: 4px;
+}
+
+#header .search-container .search-button {
+  font-size: 22px;
+  color: white;
+  height: 42px;
+  padding-top: 2px;
+  cursor: pointer;
 }
 
 #header .search-icon {
