@@ -250,7 +250,7 @@ const reducer = (state = 0, action) => {
       {},
       state,
       {
-         blog: obj
+         blog: obj.content
       }
     );
 
