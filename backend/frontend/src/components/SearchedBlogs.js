@@ -68,7 +68,7 @@ const SearchedBlogs = connect(stateToPropsSearchedBlogsMap, dispatchToPropsSearc
 
     return props.foundBlogs? (
       <div className="blog-list">
-        {blogItems}
+        {blogItems.length == 0 ? <h1>No blog found</h1> : blogItems}
         {moreBlogs}
       </div>
     ) : <NowLoading />;
