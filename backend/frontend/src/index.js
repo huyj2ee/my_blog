@@ -166,7 +166,7 @@ const reducer = (state = 0, action) => {
       );
 
     case 'SEARCH_BLOGS_SUCCESS':
-      obj = action.payload.data.items;
+      obj = action.payload.data.items ? action.payload.data.items : [];
       return Object.assign(
         {},
         state,
