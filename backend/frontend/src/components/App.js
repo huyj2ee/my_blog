@@ -75,8 +75,10 @@ const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
     const navigate = useNavigate();
 
     function onSearchClick() {
-      navigate('/searchedblogs?q=' + searchInput);
-      setSearchInput('');
+      if (searchInput.length > 0) {
+        navigate('/searchedblogs?q=' + searchInput);
+        setSearchInput('');
+      }
     }
 
     function onSearchInput(e) {
