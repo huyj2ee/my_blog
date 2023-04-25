@@ -39,9 +39,10 @@ const SearchedBlogs = connect(stateToPropsSearchedBlogsMap, dispatchToPropsSearc
     start = parseInt(start ? start : 0);
 
     useEffect(()=>{
-      if (typeof props.searchBlogs === 'function' && !props.foundBlogs)
+      if (typeof props.searchBlogs === 'function'){
         props.searchBlogs(query);
-    },[props, query]);
+      }
+    },[query]);// eslint-disable-line react-hooks/exhaustive-deps
   
     let blogItems =[];
     let moreBlogs = null;
