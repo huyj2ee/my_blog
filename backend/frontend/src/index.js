@@ -17,7 +17,7 @@ const reducer = (state = 0, action) => {
       if(posts[i].title.startsWith('[blog] ')) {
         let blog = {};
         blog['title'] = posts[i].title.substring('[blog] '.length);
-        blog['brief'] = JSON.parse(posts[i].content).brief;
+        blog['brief'] = JSON.parse(posts[i].content)[0];
         blog['slug'] = posts[i].id;
         blogs.push(blog);
       }
@@ -151,7 +151,7 @@ const reducer = (state = 0, action) => {
       {},
       state,
       {
-         blog: obj.content
+        blog: obj[1]
       }
     );
 
