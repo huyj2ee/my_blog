@@ -14,9 +14,9 @@ const reducer = (state = 0, action) => {
   let getBlogs = function(posts) {
     let blogs = [];
     for(let i = 0; i < posts.length; i++) {
-      if(posts[i].title.startsWith('[blog] ')) {
+      if(posts[i].title.startsWith('[] ')) {
         let blog = {};
-        blog['title'] = posts[i].title.substring('[blog] '.length);
+        blog['title'] = posts[i].title.substring('[] '.length);
         blog['brief'] = JSON.parse(posts[i].content)[0];
         blog['slug'] = posts[i].id;
         blogs.push(blog);

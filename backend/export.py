@@ -117,7 +117,7 @@ for row in cursor:
   print('Publish blog ' + blog['title'])
   blogObj = [blog['brief'], blog['content']]
   blogJson = json.dumps(blogObj)
-  blog['slug'] = post('[blog] ' + blog['title'], blogJson)
+  blog['slug'] = post('[] ' + blog['title'], blogJson)
   blog.pop('content', None)
   blogs.append(dict(blog))
 
