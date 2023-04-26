@@ -50,6 +50,10 @@ const SearchedBlogs = connect(stateToPropsSearchedBlogsMap, dispatchToPropsSearc
         props.clearFoundBlogs();
         props.searchBlogs(query);
       }
+      return () => {
+        if (typeof props.clearFoundBlogs === 'function' && props.foundBlogs)
+          props.clearFoundBlogs();
+      };
     },[query]);// eslint-disable-line react-hooks/exhaustive-deps
   
     let blogItems =[];

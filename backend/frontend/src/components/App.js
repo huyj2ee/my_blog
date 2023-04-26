@@ -49,13 +49,6 @@ const dispatchToPropsAppMap =
             type: 'CLEAR_BLOGS_LIST'
           }
         )
-      },
-      clearFoundBlogs: () => {
-        dispatch(
-          {
-            type: 'CLEAR_FOUND_BLOGS'
-          }
-        )
       }
     }
   };
@@ -96,9 +89,6 @@ const App = connect(stateToPropsAppMap, dispatchToPropsAppMap)(
 
     if(location.pathname !== '/blogs' && location.pathname !== '/blog' && props.blogsList && typeof props.clearBlogsList === 'function')
       props.clearBlogsList();
-
-    if(location.pathname !== '/searchedblogs' && location.pathname !== '/blog' && props.foundBlogs && typeof props.clearFoundBlogs === 'function')
-      props.clearFoundBlogs();
 
     useEffect(()=>{
       if (typeof props.loadRoot === 'function')
