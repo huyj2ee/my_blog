@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
 import { BLOG_ID, API_KEY } from '../utils/constant';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -21,6 +21,13 @@ const dispatchToPropsSearchedBlogsMap =
             } 
           }
         );
+      },
+      clearFoundBlogs: () => {
+        dispatch(
+          {
+            type: 'CLEAR_FOUND_BLOGS'
+          }
+        )
       }
     }
   };
@@ -38,8 +45,9 @@ const SearchedBlogs = connect(stateToPropsSearchedBlogsMap, dispatchToPropsSearc
     let start = searchParams.get('start');
     start = parseInt(start ? start : 0);
 
-    useEffect(()=>{
-      if (typeof props.searchBlogs === 'function'){
+    useLayoutEffect(()=>{
+      if (typeof props.clearFoundBlogs === 'function' && typeof props.searchBlogs === 'function'){
+        props.clearFoundBlogs();
         props.searchBlogs(query);
       }
     },[query]);// eslint-disable-line react-hooks/exhaustive-deps
