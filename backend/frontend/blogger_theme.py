@@ -20,9 +20,7 @@ BEGIN_TEMPLATE = """<?xml version="1.0" encoding="UTF-8" ?>
               border: none;
             }
         </style>
-        <script>
-            window['ROOT_PAGE_ID'] = '9113069058487721883';
-        </script>
+        <input id="rootId" type="hidden" value="7357769666484921466" />
         <div id="root"></div>
         <b:section id='page_body'/>
 """
