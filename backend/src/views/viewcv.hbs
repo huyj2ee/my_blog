@@ -3,6 +3,18 @@
         width: 1000px;
         margin: 20px auto;
     }
+
+    .document-container {
+        width: 848px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .document-container .document {
+        width: 100%;
+        padding: 32px;
+        background-color: #ccc;
+    }
 </style>
 <div id="container">
     <div>
@@ -10,6 +22,8 @@
     </div>
     <div>
         <div>Content:</div>
-        <div>{{{content}}}</div>
+        <div class="document-container">
+            <div class="document">{{{content}}}</div>
+        </div>
     </div>
 </div>
