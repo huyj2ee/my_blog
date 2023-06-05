@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { BLOG_ID, API_KEY } from '../utils/constant';
 import NowLoading from './NowLoading';
+import hljs  from 'highlight.js';
 
 const dispatchToPropsProjectMap =
   dispatch => {
@@ -48,6 +49,9 @@ const Project = connect(stateToPropsProjectMap, dispatchToPropsProjectMap)(
         props.loadProject(slug);
       if (props.project) {
         projectContainer.current.innerHTML = props.project;
+        const blocks = document.querySelectorAll('pre code');
+        blocks.forEach((block)=>block.classList.remove('language-plaintext'));
+        hljs.highlightAll();
       }
       return () => {
         if (typeof props.clearProject === 'function' && props.project)

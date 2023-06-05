@@ -20,7 +20,7 @@ BEGIN_TEMPLATE = """<?xml version="1.0" encoding="UTF-8" ?>
               border: none;
             }
         </style>
-        <input id="rootId" type="hidden" value="7357769666484921466" />
+        <input id="rootId" type="hidden" value="1530063979538605634" />
         <div id="root"></div>
         <b:section id='page_body'/>
 """

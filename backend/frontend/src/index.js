@@ -8,6 +8,7 @@ import {
   BrowserRouter as Router,
 } from 'react-router-dom';
 import App from './components/App';
+import './highlightjs.css'
 import './style.css';
 
 const reducer = (state = 0, action) => {
