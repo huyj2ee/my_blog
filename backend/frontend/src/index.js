@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import axios from 'axios';
 import axiosMiddleware from 'redux-axios-middleware';
 import {
@@ -185,13 +185,12 @@ const client = axios.create({
   responseType: 'json'
 });
 
-const store = createStore(
-  reducer,
+const store = configureStore(
   {
-  },
-  applyMiddleware(
-    axiosMiddleware(client)
-  )
+    reducer: reducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(axiosMiddleware(client)),
+    preloadedState: {}
+  }
 );
 
 const root = createRoot(document.getElementById('root'));
