@@ -19,6 +19,10 @@ Home.init({
   content: {
     type: DataTypes.TEXT('medium'),
     allowNull: false
+  },
+  state: {
+    type: DataTypes.TINYINT,
+    allowNull: false
   }
 }, {
   sequelize

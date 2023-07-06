@@ -1,4 +1,5 @@
 const Project = require('../dao/Project');
+const OrphanPost = require('../dao/OrphanPost');
 
 class ProjectController {
   viewProject(req, res, next) {
@@ -16,6 +17,7 @@ class ProjectController {
   newProject(req, res) {
     res.render('project', {
       slug: '',
+      state: 0,
       img: '',
       name: '',
       brief: '',
@@ -25,7 +27,10 @@ class ProjectController {
   }
 
   createProject(req, res, next) {
-    Project.create(req.body)
+    Project.create({
+      ...req.body,
+      state: 0
+    })
     .then((project) => {
       res.redirect('/admin/projects');
     })
@@ -48,7 +53,10 @@ class ProjectController {
   }
 
   saveProject(req, res, next) {
-    Project.update(req.body, {
+    Project.update({
+      ...req.body,
+      state: parseInt(req.body.state) === 0 ? 0 : 1
+    }, {
       where: {
         slug: req.params.slug
       }
@@ -65,7 +73,16 @@ class ProjectController {
         slug: req.params.slug
       }
     })
-    .then((projects) => projects[0].destroy())
+    .then((projects) => {
+      let state = projects[0].state;
+      let slug = projects[0].slug;
+      projects[0].destroy();
+      if (state === 1 || state === 2) {
+        OrphanPost.create({
+          slug: slug
+        })
+      }
+    })
     .then(() => {
       res.redirect('/admin/projects');
     })

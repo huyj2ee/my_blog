@@ -6,7 +6,8 @@ class CVController {
     .then((cvs) => {
       if (cvs.length === 0) {
         CV.create({
-          content: ""
+          content: "",
+          state: 0
         })
         .then((cv) => {
           res.redirect('/admin/cvs');
@@ -34,7 +35,10 @@ class CVController {
   saveCV(req, res, next) {
     CV.findAll({})
     .then((cvs) => {
-      return CV.update(req.body, {
+      return CV.update({
+        ...req.body,
+        state: parseInt(req.body.state) === 0 ? 0 : 1
+      }, {
         where: {
           id: cvs[0].dataValues.id
         }

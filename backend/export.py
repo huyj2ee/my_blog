@@ -5,6 +5,8 @@ import sqlite3
 import json
 
 WAIT_SECONDS=20
+WAIT_FACTOR=3600 #2400 #1200 #600 #300  #60
+WAIT_BUFFER=18   #10
 BLOG_ID = '904737282308882794'
 access_token = input('Enter access token: ')
 
@@ -58,7 +60,7 @@ def post(title, content):
     print('Access denied')
     exit()
   obj = json.loads(content)
-  time.sleep(WAIT_SECONDS)
+  time.sleep(int(len(payload)/WAIT_FACTOR) + WAIT_BUFFER)
   return obj['id']
 
 
@@ -77,54 +79,79 @@ for row in cursor:
 print('\nPublish Home page')
 homejson = json.dumps(home)
 root['homePageId'] = post('Home page', homejson)
+cursor = connection.execute(''.join([
+  'UPDATE Homes ',
+  'SET state=2'
+]))
+connection.commit()
 print('')
+
 
 #Publish projects page
 projects = []
 project = {}
 cursor = connection.execute(''.join([
   'SELECT ',
-    'img, name, brief, document ',
-  'FROM Projects'
+    'img, name, brief, document, slug ',
+  'FROM Projects ',
+  'ORDER BY createdAt'
 ]))
 for row in cursor:
   project['img'] = row[0]
   project['name'] = row[1]
   project['brief'] = row[2]
   project['document'] = row[3]
+  oldKey = row[4]
   projectJson = json.dumps(project['document'])
   print('Publish project ' + project['name'])
   project['slug'] = post('[project] ' + project['name'], projectJson)
   project.pop('document', None)
   projects.append(dict(project))
+  cursor = connection.execute(''.join([
+    'UPDATE Projects ',
+    'SET state=2, slug=\'' + project['slug'] + '\' ',
+    'WHERE slug=\'', oldKey, '\''
+  ]))
+  connection.commit()
+
 print('Publish projects list')
 projectListJson = json.dumps(projects)
 root['projectsListId'] = post('Projects list', projectListJson)
 print('')
+
 
 #Publish Blogs page
 blogs = []
 blog = {}
 cursor = connection.execute(''.join([
   'SELECT ',
-    'title, brief, content ',
-  'FROM Blogs'
+    'title, brief, content, slug ',
+  'FROM Blogs ',
+  'ORDER BY createdAt'
 ]))
 for row in cursor:
   blog['title'] = row[0]
   blog['brief'] = row[1]
   blog['content'] = row[2]
+  oldKey = row[3]
   print('Publish blog ' + blog['title'])
   blogObj = [blog['brief'], blog['content']]
   blogJson = json.dumps(blogObj)
   blog['slug'] = post('[] ' + blog['title'], blogJson)
   blog.pop('content', None)
   blogs.append(dict(blog))
+  cursor = connection.execute(''.join([
+    'UPDATE Blogs ',
+    'SET state=2, slug=\'' + blog['slug'] + '\' ',
+    'WHERE slug=\'', oldKey, '\''
+  ]))
+  connection.commit()
 
 print('Publish blogs list')
 blogListJson = json.dumps(blogs)
 root['blogsListId'] = post('Blogs list', blogListJson)
 print('')
+
 
 #Publish CV page
 cv = {}
@@ -139,6 +166,21 @@ print('Publish CV page')
 cvJson = json.dumps(cv['content'])
 root['cvPageId'] = post('CV page', cvJson)
 print('')
+cursor = connection.execute(''.join([
+  'UPDATE CVs ',
+  'SET state=2'
+]))
+connection.commit()
+
+
+#Clean orphan posts
+print('Clean orphan posts');
+cursor = connection.execute(''.join([
+  'DELETE FROM OrphanPosts'
+]))
+connection.commit()
+print('')
+
 
 #Publish root page
 print('Publish Root page')
@@ -147,3 +189,28 @@ rootPageId = post('\nRoot page', rootJson)
 print('Root page id: ' + rootPageId)
 print('Root object:')
 print(root)
+cursor = connection.execute(''.join([
+  'CREATE TABLE IF NOT EXISTS root ( ',
+    'rootPageId TEXT,',
+    'homePageId TEXT,',
+    'projectsListId TEXT,',
+    'blogsListId TEXT,',
+    'cvPageId TEXT',
+  ')'
+]))
+connection.commit()
+cursor = connection.execute(''.join([
+  'DELETE FROM root',
+]))
+connection.commit()
+cursor = connection.execute(''.join([
+  'INSERT INTO root(rootPageId, homePageId, projectsListId, blogsListId, cvPageId) ',
+  'VALUES (',
+    '\'' + rootPageId + '\', '
+    '\'' + root['homePageId'] + '\', '
+    '\'' + root['projectsListId'] + '\', '
+    '\'' + root['blogsListId'] + '\', '
+    '\'' + root['cvPageId'] + '\' '
+  ')'
+]))
+connection.commit()

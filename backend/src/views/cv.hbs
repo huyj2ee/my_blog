@@ -15,6 +15,9 @@
 </style>
 <div id="container">
     <form action="?_method={{method}}" method="post">
+        <label for="state">State</label>
+        <input type="text" name="state" style="width: 900px" value="{{state}}" readonly/>
+        <br />
         <label for="content">Content</label>
         <textarea id="editor" name="content" >{{{content}}}</textarea>
         <p><input type="submit" value="Submit"></p>

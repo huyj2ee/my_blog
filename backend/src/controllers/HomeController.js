@@ -9,7 +9,8 @@ class HomeController {
           name: "",
           quote:"",
           img: "",
-          content: ""
+          content: "",
+          state: 0,
         })
         .then((home) => {
           res.redirect('/admin/homes');
@@ -37,7 +38,10 @@ class HomeController {
   saveHome(req, res, next) {
     Home.findAll({})
     .then((homes) => {
-      return Home.update(req.body, {
+      return Home.update({
+        ...req.body,
+        state: parseInt(req.body.state) === 0 ? 0 : 1
+      }, {
         where: {
           id: homes[0].dataValues.id
         }
