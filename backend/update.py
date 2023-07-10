@@ -112,7 +112,7 @@ cursor = connection.execute(''.join([
   'SELECT ',
     'img, name, brief, document, slug, state ',
   'FROM Projects ',
-  'ORDER BY createdAt'
+  'ORDER BY createdAt DESC'
 ]))
 for row in cursor:
   project['img'] = row[0]
@@ -165,7 +165,7 @@ cursor = connection.execute(''.join([
   'SELECT ',
     'title, brief, content, slug ,state ',
   'FROM Blogs ',
-  'ORDER BY createdAt'
+  'ORDER BY createdAt DESC'
 ]))
 for row in cursor:
   blog['title'] = row[0]
