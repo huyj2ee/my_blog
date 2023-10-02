@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 from xml.dom.minidom import getDOMImplementation
 
 
@@ -31,7 +31,7 @@ END_TEMPLATE = """
 </html>
 """
 
-print BEGIN_TEMPLATE
+print(BEGIN_TEMPLATE)
 
 impl = getDOMImplementation()
 
@@ -46,9 +46,9 @@ if idx >= 0:
 		cssFile = open(fileName)
 		cssString = cssFile.read()
 		cssFile.close()
-		print "<style>"
-		print cssString
-		print "</style>"
+		print("<style>")
+		print(cssString)
+		print("</style>")
 
 scripts = []
 preIdx = 0
@@ -68,7 +68,7 @@ while True:
             newdoc = impl.createDocument(None, "script", None)
             text = newdoc.createTextNode("\n".join(scripts))
             newdoc.documentElement.appendChild(text)
-            print newdoc.toxml()[22:]
+            print(newdoc.toxml()[22:])
             scripts=[]
         else:
             idx = html.find("src=\"", idx)
@@ -87,10 +87,10 @@ while True:
                 newdoc = impl.createDocument(None, "script", None)
                 text = newdoc.createTextNode("\n".join(scripts))
                 newdoc.documentElement.appendChild(text)
-                print newdoc.toxml()[22:]
+                print(newdoc.toxml()[22:])
                 scripts=[]
             preIdx = endIdx + len("\">")
     else:
         break
 
-print END_TEMPLATE
+print(END_TEMPLATE)
