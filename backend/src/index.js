@@ -9,9 +9,15 @@ const port = 3000;
 
 app.use(methodOverride('_method'));
 app.use(express.static('frontend/build'));
+app.use(bodyParser.json({
+  limit:1024*1024*100,
+  type:'application/json'
+}));
 app.use(bodyParser.urlencoded({
-  extended: true
-})); 
+  extended:true,
+  limit:1024*1024*100,
+  type:'application/x-www-form-urlencoded'
+}));
 app.engine('.hbs', engine({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 app.set('views', './src/views');
