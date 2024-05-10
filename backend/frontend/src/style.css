@@ -312,3 +312,31 @@ html {
   background-color: #000;
   color: #fff;
 }
+
+figure.image {
+  text-align:center;
+}
+
+table.ck-table-resized {
+  width: 100%;
+}
+
+figure.table {
+  margin:auto;
+}
+
+table.ck-table-resized, table.ck-table-resized td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table.ck-table-resized td {
+  padding: 4px;
+}
+
+div.hscrollable_container {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: 100%;
+  height: 100%;
+}
