@@ -6,11 +6,10 @@ class HomeController {
     .then((homes) => {
       if (homes.length === 0) {
         Home.create({
-          name: "",
-          quote:"",
-          img: "",
-          content: "",
-          state: 0,
+          name: '',
+          quote:'',
+          img: '',
+          content: ''
         })
         .then((home) => {
           res.redirect('/admin/homes');
@@ -38,12 +37,9 @@ class HomeController {
   saveHome(req, res, next) {
     Home.findAll({})
     .then((homes) => {
-      return Home.update({
-        ...req.body,
-        state: parseInt(req.body.state) === 0 ? 0 : 1
-      }, {
+      return Home.update(req.body, {
         where: {
-          id: homes[0].dataValues.id
+          name: homes[0].dataValues.name
         }
       })
     })

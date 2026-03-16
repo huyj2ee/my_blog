@@ -4,24 +4,20 @@ const { sequelize } = require('./sequelize');
 class Home extends Model {}
 
 Home.init({
-  img: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
   name:{
     type: DataTypes.STRING,
-    allowNull: false
+    primaryKey: true
   },
   quote:{
     type: DataTypes.STRING,
     allowNull: false
   },
-  content: {
-    type: DataTypes.TEXT('medium'),
+  img: {
+    type: DataTypes.STRING,
     allowNull: false
   },
-  state: {
-    type: DataTypes.TINYINT,
+  content: {
+    type: DataTypes.TEXT('medium'),
     allowNull: false
   }
 }, {

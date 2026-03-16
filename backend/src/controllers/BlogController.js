@@ -1,5 +1,4 @@
 const Blog = require('../dao/Blog');
-const OrphanPost = require('../dao/OrphanPost');
 
 class BlogController {
   viewBlog(req, res, next) {
@@ -17,7 +16,6 @@ class BlogController {
   newBlog(req, res) {
     res.render('blog', {
       slug: '',
-      state: 0,
       title: '',
       brief: '',
       content: '',
@@ -26,10 +24,7 @@ class BlogController {
   }
 
   createBlog(req, res, next) {
-    Blog.create({
-      ...req.body,
-      state: 0
-    })
+    Blog.create(req.body)
     .then((blog) => {
       res.redirect('/admin/blogs');
     })
@@ -52,10 +47,7 @@ class BlogController {
   }
 
   saveBlog(req, res, next) {
-    Blog.update({
-      ...req.body,
-      state: parseInt(req.body.state) === 0 ? 0 : 1
-    }, {
+    Blog.update(req.body, {
       where: {
         slug: req.params.slug
       }
@@ -73,14 +65,7 @@ class BlogController {
       }
     })
     .then((blogs) => {
-      let state = blogs[0].state;
-      let slug = blogs[0].slug;
       blogs[0].destroy();
-      if (state === 1 || state === 2) {
-        OrphanPost.create({
-          slug: slug
-        })
-      }
     })
     .then(() => {
       res.redirect('/admin/blogs');

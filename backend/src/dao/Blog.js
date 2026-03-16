@@ -5,8 +5,9 @@ class Blog extends Model {}
 
 Blog.init({
   slug: {
-    type: DataTypes.STRING,
-    primaryKey: true
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
   },
   title: {
     type: DataTypes.STRING,
@@ -18,10 +19,6 @@ Blog.init({
   },
   content: {
     type: DataTypes.TEXT('medium'),
-    allowNull: false
-  },
-  state: {
-    type: DataTypes.TINYINT,
     allowNull: false
   }
 }, {

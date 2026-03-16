@@ -5,8 +5,9 @@ class Project extends Model {}
 
 Project.init({
   slug: {
-    type: DataTypes.STRING,
-    primaryKey: true
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
   },
   img: {
     type: DataTypes.STRING,
@@ -22,10 +23,6 @@ Project.init({
   },
   document: {
     type: DataTypes.TEXT('medium'),
-    allowNull: false
-  },
-  state: {
-    type: DataTypes.TINYINT,
     allowNull: false
   }
 }, {
