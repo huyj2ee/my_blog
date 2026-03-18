@@ -1,4 +1,5 @@
 const Blog = require('../dao/Blog');
+const { createBaseTextForBlog } = require('../lib/utils');
 
 class BlogController {
   viewBlog(req, res, next) {
@@ -24,7 +25,10 @@ class BlogController {
   }
 
   createBlog(req, res, next) {
-    Blog.create(req.body)
+    Blog.create({
+      ...req.body,
+      ...createBaseTextForBlog(req.body)
+    })
     .then((blog) => {
       res.redirect('/admin/blogs');
     })
@@ -47,7 +51,10 @@ class BlogController {
   }
 
   saveBlog(req, res, next) {
-    Blog.update(req.body, {
+    Blog.update({
+      ...req.body,
+      ...createBaseTextForBlog(req.body)
+    }, {
       where: {
         slug: req.params.slug
       }

@@ -20,6 +20,18 @@ Blog.init({
   content: {
     type: DataTypes.TEXT('medium'),
     allowNull: false
+  },
+  baseTitle: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  baseBrief: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  baseContent: {
+    type: DataTypes.TEXT('medium'),
+    allowNull: false
   }
 }, {
   sequelize

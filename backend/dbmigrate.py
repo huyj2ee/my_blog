@@ -91,8 +91,8 @@ for row in srcCursor:
   blog['createdAt'] = row[3]
   blog['updatedAt'] = row[4]
   cursor = connection.execute(''.join([
-    "INSERT INTO Blogs(title, brief, content, createdAt, updatedAt) ",
-    "VALUES(?, ?, ?, ?, ?)"
+    "INSERT INTO Blogs(title, brief, content, createdAt, updatedAt, baseTitle, baseBrief, baseContent) ",
+    "VALUES(?, ?, ?, ?, ?, '', '', '')"
   ]), (blog['title'], blog['brief'], blog['content'], blog['createdAt'], blog['updatedAt']))
   connection.commit()
 
